@@ -1,0 +1,110 @@
+team1 = chelsea
+team2 = manu
+goals = 0
+scorers = []
+#randoms
+def select_team():
+    global team1, team2, checker, checker2
+    checker2 = True
+    checker = None
+    teams = {'BARCELONA':barcelona,'MADRID':madrid,'VALENCIA':valencia,'ATLETICO MADRID':amadrid,'SEVILLA':sevilla,'MANCHESTER CITY':manc,'MANCHESTER UNITED':manu,'CHELSEA':chelsea,'TOTTENHAM':tottenham,'LIVERPOOL':liverpool,'NAPOLI':napoli,'JUVENTUS':juventus,'INTER MILAN':inter,'AS ROMA':roma,'LAZIO':lazlo}
+    team1 = input('First Team:').upper()
+    print(team1)
+    if team1 in teams.keys():
+        team1 = teams[team1]
+        checker = True
+    else:
+        print(team1,'Does not exist or has not yet been added!!!')
+        checker = False
+    team2 = input('Second Team:').upper()
+    print(team2)
+    if team2 in teams.keys():
+        team2 = teams[team2]
+        if checker != False:
+           checker = True
+    else:
+        print(team2,'Does not exist or has not yet been added')
+        checker = False
+    if team2 == team1:
+        checker2 = False
+        
+select_team()
+def find_team(player):
+    if player in team1:
+        return team1
+    else:
+        return team2
+    
+def randomness():
+    global team, w, teams,strikers, midfielders, re, rea
+    w = random.randint(1,2)
+    teams = (team1, team2)
+    team = random.choice(teams)
+    strikers = random.choice(team[1:3])
+    midfielders =random.choice(team[4:6])
+    re = [strikers, midfielders]
+    rea = random.choice(re)
+randomness()
+defenders = None
+def organize(rea):
+ global defenders
+ if rea in team1:
+  defenders = random.choice(team2[7:-2])
+ else:
+  defenders = random.choice(team1[7:-2])
+
+def versus():
+ print('{0}   VS   {1}'.format(team1[0], team2[0]))
+
+
+def beautifulgoal():
+ global scorers
+ global goals
+ goals += 1
+ print('{0} gets the ball takes it past 1!'.format(rea))
+ print('2 PLAYERS!')
+ print('3 WHOLE PLAYERS!!')
+ if w == 1:
+  print('And {0} scores a beautiful goal!'.format(rea))
+  entry = (rea,j)
+  scorers.append(entry)
+ else:
+  print('He misses upon all his hardwork')
+ 
+def lineup():
+ print('The of lineup of {0} is:'.format(team1[0]))
+ for i in team1[1::]:
+  print(i)
+ print('\n\nThe of lineup of {0} is:'.format(team2[0]))
+ for i in team2[1::]:
+  print(i)
+
+def scoresheet():
+ global scorers
+ c = 0
+ minutes = []
+ goal_scorers = []
+ goalcount1 = 0
+ goalcount2 = 0
+ for i in scorers:
+  goal_scorers.append(scorers[c][0])
+  c += 1
+ c = 0
+ for i in scorers:
+     minutes.append(scorers[c][1])
+     c += 1
+ for i in goal_scorers:
+     if i in team1:
+         goalcount1 += 1
+     else:
+         goalcount2 += 1
+ print("""
+FINAL SCORE:
+{0}:{1}
+{2}:{3}     
+ """.format(team1[0],goalcount1, team2[0], goalcount2))
+ print('SCORERS:')
+ c = 0
+ for i in goal_scorers:
+     print("{0} \t '{1}'".format(i,str(minutes[c])))
+     c += 1
